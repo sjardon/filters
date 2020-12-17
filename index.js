@@ -4,7 +4,7 @@ const provincias = require('./data/provincias');
 
 value = Walker.start(
     provincias,
-    ['nombre_de_provincias']
+    ['latitud']
 );
 
 console.log(value);

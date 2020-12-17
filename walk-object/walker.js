@@ -6,13 +6,12 @@ module.exports = class Walker{
     // Responsabilidad: recorrer un objeto, el que sea, llegando hasta la propiedad que se le indica.
 
     static objectStructure = {
-        'nombre_de_provincias': ['provincias','nombre']
+        'nombre_de_provincias': ['provincias','nombre'],
+        'latitud': ['provincias','centroide','lon']
     }
 
     static start(object,where){
-        
 
-        
         var value;
         
         for(var i in where){
@@ -51,7 +50,10 @@ module.exports = class Walker{
             // A esepción de que sea el último elemento de las keys a recorrer.
             // En ese caso, el array es el elemento que se está buscando.
             
+
             if(Array.isArray(value[currentIndex]) && i!=keys.length-1){
+
+
                 // console.log('leyendo array');
 
                 // Llamo recursivamente a Walker.walk para poder recorrer cada objeto del array.
@@ -59,14 +61,27 @@ module.exports = class Walker{
                 // En el caso de este ejemplo vamos a devolver todos los valores que están dentro del array y la ruta especificada por las keys
 
                 // Las keys van a ser las mismas menos las que ya se recorrieron.
-                var keysForArray = keys.slice((i*1)+1);
+                // var keysForArray = keys.slice((i*1)+1);
                 
                 let valueArray = []
                 
                 
                 for(var j in value[currentIndex]){
                     
-                    valueArray.push(Walker.walk(value[currentIndex][j],keysForArray));
+                    
+                    var keysForArray = keys.slice((i*1)+1);
+                    
+                    if(Array.isArray(value[currentIndex][j])){
+                        
+                        // Problemas con arrays de arrays
+
+                        keysForArray.unshift(j);
+                        valueArray.push(Walker.walk(value[currentIndex],keysForArray));
+
+                    }else{
+                        valueArray.push(Walker.walk(value[currentIndex][j],keysForArray));
+                    }
+
                     
                 }
                 
@@ -76,7 +91,6 @@ module.exports = class Walker{
             }else{
                 // console.log('leyendo valor');
                 // Si el valor no es un array lo recorre normalmente
-
                 value = value[currentIndex];
 
             }
