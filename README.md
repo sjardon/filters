@@ -24,8 +24,6 @@ static fields = {
 }
 ```
 
-    Hay un detalle: Retailer puede ser un array, el filtro va a recorrer cada elemento y validar stock-count para cada uno.
-
 Después podemos utilizar ese alias en la configuración de cada retailer.
 
 Para definir el filtro para un elemento utilizamos como nombre de la propiedad el alias de dicho campo. El valor de cada elemento es un array con el o los filtros a utilizar. Cada filtro es un objeto con las propiedades _operation_ (La función del validador a utilizar) y _parameters_ (Un array con los parametros de dicha función). El siguiente ejemplo nos indica que el campo _manufacturer_ tiene que ser igual a alguno de los valores indicados en _parameters_.
