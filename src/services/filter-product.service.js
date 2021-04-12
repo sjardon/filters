@@ -1,15 +1,11 @@
-const Validator = require('./filter-helper/validatorHelper');
+const ValidatorService = require('./filter-product/validator.service');
 
 
-module.exports = class FilterProduct{
+module.exports = class FilterProductService{
 
 
     static fields = {
-        stock: ['retailers','retailer','stock-count'],
-        // retailer_id: ['retailers','retailer','id'],
-        retailer: ['retailers','retailer'],
-        property: ['properties','group','property'],
-        manufacturer: ['manufacturer']
+        nombre: ['nombre']
     }
 
     // Aclaraciones:
@@ -20,11 +16,11 @@ module.exports = class FilterProduct{
 
         for(var i in conditions){
             
-            if(typeof FilterProduct.fields[i] == 'undefined'){
+            if(typeof FilterProductService.fields[i] == 'undefined'){
                 continue;
             }
 
-            valid = FilterProduct.validate(product,conditions[i],FilterProduct.fields[i]);
+            valid = FilterProductService.validate(product,conditions[i],FilterProductService.fields[i]);
             if(!valid){
                 return valid;
             }
@@ -36,7 +32,6 @@ module.exports = class FilterProduct{
 
     static validate(product,conditions,keys){
 
-        
             // Recorro el objeto buscando el elemento a evaluar
 
             var value = product;
@@ -53,7 +48,7 @@ module.exports = class FilterProduct{
 
                 for(var j in value[currentIndex]){
 
-                    valid = FilterProduct.validate(value[currentIndex][j],conditions,keysForArray);
+                    valid = FilterProductService.validate(value[currentIndex][j],conditions,keysForArray);
                 
                     if(!valid){
                         return valid;
@@ -67,7 +62,7 @@ module.exports = class FilterProduct{
                 value = value[currentIndex];
 
                 if(typeof value == 'undefined'){
-                    // Si es undefined lo detecta Validator.getRealType
+                    // Si es undefined lo detecta ValidatorService.getRealType
                     break;
                 }
 
@@ -75,7 +70,7 @@ module.exports = class FilterProduct{
             
         }
 
-        valid = Validator.validate(value,conditions);
+        valid = ValidatorService.validate(value,conditions);
         
         return valid;
 

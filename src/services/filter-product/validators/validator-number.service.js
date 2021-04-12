@@ -1,4 +1,4 @@
-module.exports = class ValidatorNumber{
+module.exports = class ValidatorNumberService{
 
     static validate(value,conditions){
         var isValid = true;
@@ -8,19 +8,19 @@ module.exports = class ValidatorNumber{
 
         switch (conditions.operation) {
             case 'equal':
-                isValid = ValidatorNumber.validateEqual(value,conditions.parameters);        
+                isValid = ValidatorNumberService.validateEqual(value,conditions.parameters);        
                 break;
             case 'notEqual':
-                isValid = !ValidatorNumber.validateEqual(value,conditions.parameters);        
+                isValid = !ValidatorNumberService.validateEqual(value,conditions.parameters);        
                 break;
             case 'bigger':
-                isValid = ValidatorNumber.validateBigger(value,conditions.parameters);
+                isValid = ValidatorNumberService.validateBigger(value,conditions.parameters);
                 break;
             case 'smaller':
-                isValid = ValidatorNumber.validateSmaller(value,conditions.parameters);
+                isValid = ValidatorNumberService.validateSmaller(value,conditions.parameters);
                 break;
             case 'between':
-                isValid = ValidatorNumber.validateBetween(value,conditions.parameters);
+                isValid = ValidatorNumberService.validateBetween(value,conditions.parameters);
                 break;
         }
         

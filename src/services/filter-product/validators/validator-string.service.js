@@ -1,4 +1,4 @@
-module.exports = class ValidatorString{
+module.exports = class ValidatorStringService{
 
 
     static validate(value,conditions){
@@ -6,16 +6,16 @@ module.exports = class ValidatorString{
 
         switch (conditions.operation) {
             case 'equal':
-            isValid = ValidatorString.validateEqual(value,conditions.parameters);        
+            isValid = ValidatorStringService.validateEqual(value,conditions.parameters);        
             break;
             case 'notEqual':
-            isValid = !ValidatorString.validateEqual(value,conditions.parameters);        
+            isValid = !ValidatorStringService.validateEqual(value,conditions.parameters);        
             break;
             case 'includes':
-            isValid = ValidatorString.validateIncludes(value,conditions.parameters);        
+            isValid = ValidatorStringService.validateIncludes(value,conditions.parameters);        
             break;
             case 'notIncludes':
-            isValid = !ValidatorString.validateIncludes(value,conditions.parameters);
+            isValid = !ValidatorStringService.validateIncludes(value,conditions.parameters);
             break;
         }
 

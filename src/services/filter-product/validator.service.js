@@ -1,10 +1,10 @@
 
-const ValidatorString = require('./validators/validatorStringHelper');
-const ValidatorNumber = require('./validators/validatorNumberHelper');
-// const ValidatorArray = require('./validators/validatorArrayHelper');
-// const ValidatorObject = require('./validators/validatorObjectHelper');
+const ValidatorStringService = require('./validators/validator-string.service');
+const ValidatorNumberService = require('./validators/validator-number.service');
+// const ValidatorArrayService = require('./validators/ValidatorArrayServiceHelper');
+// const ValidatorObjectService = require('./validators/ValidatorObjectServiceHelper');
 
-class Validator{
+class ValidatorService{
 
     // Aclaraciones:
     // - si hay un filtro que no se aplica a ninguna propiedad del producto no lo toma en cuenta
@@ -14,7 +14,7 @@ class Validator{
 
         for(var i in conditions){
 
-            const validator = Validator.getValidator(value);
+            const validator = ValidatorService.getValidator(value);
             
             if(validator){
                 isValid = validator.validate(value,conditions[i]);
@@ -33,18 +33,18 @@ class Validator{
 
     static getValidator(value){
 
-        switch (Validator.getRealType(value)) {
+        switch (ValidatorService.getRealType(value)) {
             case 'string':
-                return ValidatorString;
+                return ValidatorStringService;
                 break;
             case 'number':
-                return ValidatorNumber;
+                return ValidatorNumberService;
                 break;
             case 'array':
-                return ValidatorArray;
+                return ValidatorArrayService;
                 break;
             case 'object':
-                return ValidatorObject;
+                return ValidatorObjectService;
                 break;
             default:
                 return false;
@@ -81,7 +81,7 @@ class Validator{
 
 // ---------------------- VALIDATOR OBJECT
 
-class ValidatorObject{
+class ValidatorObjectService{
     
     
     static validate(value,conditions){
@@ -91,10 +91,10 @@ class ValidatorObject{
         
         switch (conditions.operation) {
            case 'hasNotObject':
-            isValid = !ValidatorObject.validateHasObject(value,conditions.parameters);
+            isValid = !ValidatorObjectService.validateHasObject(value,conditions.parameters);
             break;
             case 'hasObject':
-            isValid = ValidatorObject.validateHasObject(value,conditions.parameters);
+            isValid = ValidatorObjectService.validateHasObject(value,conditions.parameters);
             
             break;
         }
@@ -113,7 +113,7 @@ class ValidatorObject{
                     return false;
                 }
                 
-                var isValid = Validator.validate(value[j],condition[i][j]);
+                var isValid = ValidatorService.validate(value[j],condition[i][j]);
                 
                 if(!isValid){
                     return false;
@@ -130,7 +130,7 @@ class ValidatorObject{
 
 // ---------------------- VALIDATOR ARRAY
 
-class ValidatorArray{
+class ValidatorArrayService{
  
 
     static validate(value,conditions){
@@ -140,10 +140,10 @@ class ValidatorArray{
 
         switch (conditions.operation) {
             case 'hasObject':
-            isValid = ValidatorArray.validateHasObject(value,conditions.parameters);
+            isValid = ValidatorArrayService.validateHasObject(value,conditions.parameters);
             break;
             case 'hasNotObject':
-            isValid = !ValidatorArray.validateHasObject(value,conditions.parameters);
+            isValid = !ValidatorArrayService.validateHasObject(value,conditions.parameters);
             break;
         }
 
@@ -156,7 +156,7 @@ class ValidatorArray{
 
         for(var i in value){
         
-           isValid = ValidatorObject.validate(value[i],{
+           isValid = ValidatorObjectService.validate(value[i],{
                operation: 'hasObject',
                parameters: condition
             });
@@ -172,4 +172,4 @@ class ValidatorArray{
 }
 
 
-module.exports = Validator;
+module.exports = ValidatorService;

@@ -1,10 +1,21 @@
-const Walker = require('./walk-object/walker');
+const { filterService } = require('./src/services');
+const data = require('./src/data/provincias');
 
-const provincias = require('./data/provincias');
+const provName = 'Buenos Aires';
 
-value = Walker.start(
-    provincias,
-    ['nombre_de_provincias']
-);
+// Filtra las provincias buscando el campo indicado en la key
+// El filtro se puede hacer más complejo y agregar diferentes funciones de validación
 
-console.log(value);
+const filterConditions = {
+    nombre: [{
+        operation: 'includes',
+        parameters:[provName]
+    }]
+}
+
+let provincias = data.provincias.filter((provincia) => {
+
+    return filterService.isValid(provincia,filterConditions)
+});
+
+console.log(provincias);
